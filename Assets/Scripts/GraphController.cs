@@ -7,8 +7,10 @@ using UnityEngine.Events;
 public class GraphController : MonoBehaviour
 {
 	#region Parameters
+	public bool drawLine = false;
 	[SerializeField] private Transform sphere;
 	[SerializeField] private Slider slider;
+	[SerializeField] private LineRenderer graphLine;
 	[SerializeField] private GameObject[] lineTrails;
     [SerializeField] private Transform[] points;
 	#endregion
@@ -16,20 +18,20 @@ public class GraphController : MonoBehaviour
 	#region Control Variables
 	private float _duration;
 	private float _elapsedTime;
-	private bool _start = false;
+	private int index;
 	#endregion
 
 	#region Unity Methods
 	// Start is called before the first frame update
 	void Start()
 	{
-		_start = true;
+		index = 0;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (_start)
+		if (slider.isMoving)
 		{
 			//Getting Slider values
 			_duration = slider.totalDistance;
@@ -46,6 +48,11 @@ public class GraphController : MonoBehaviour
 			//Graph Sphere position 
 			sphere.position = Vector2.Lerp(pointD, pointE, _elapsedTime / _duration);
 
+			//For draw the function
+			if (drawLine) {
+				graphLine.SetPosition(index, sphere.position);
+				index++;
+			}
 			//Calculating the scale of trail X
 			var value = points[0].localPosition.x * -1 + sphere.position.x;
 
@@ -61,6 +68,7 @@ public class GraphController : MonoBehaviour
 			//Y trail
 			lineTrails[1].transform.position = new Vector3(sphere.position.x, midPoint2, sphere.position.z);
 			lineTrails[1].transform.localScale = new Vector3(lineTrails[1].transform.localScale.x, sphere.localPosition.y, lineTrails[1].transform.localScale.z);
+			
 		}
 	}
 	#endregion

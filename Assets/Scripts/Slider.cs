@@ -12,8 +12,12 @@ public class Slider : MonoBehaviour
 
 	public float currentValue = 0;
 	public float totalDistance = 0;
+	public bool isMoving = false;
 	#endregion
-
+	#region Control Variables
+	private float lastValue = 0;
+	#endregion
+ 
 	#region Unity Methods
 
 	private void Start()
@@ -30,6 +34,9 @@ public class Slider : MonoBehaviour
 	#region General Methods
 	private void ProcessSliderMovement()
 	{
+		//Slider value
+		currentValue = _startPos.localPosition.x * -1 + _sphere.transform.localPosition.x;
+
 		//Slider limits
 		_sphere.transform.localPosition = new Vector3(_sphere.transform.localPosition.x, 0, 0);
 		if (_sphere.transform.localPosition.x <= _startPos.localPosition.x)
@@ -40,8 +47,17 @@ public class Slider : MonoBehaviour
 		{
 			_sphere.transform.localPosition = new Vector3(_endPos.localPosition.x, 0, 0);
 		}
-		//Slider value
-		currentValue = _startPos.localPosition.x * -1 + _sphere.transform.localPosition.x;
+		
+		//Movement detection
+		if(currentValue != lastValue)
+		{
+			isMoving = true;
+		}
+		else
+		{
+			isMoving = false;
+		}
+		lastValue = currentValue;
 	}
 	#endregion
 }
