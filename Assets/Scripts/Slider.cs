@@ -23,7 +23,7 @@ public class Slider : MonoBehaviour
 	private void Start()
 	{
 		//Total distance
-		totalDistance = (_startPos.position.x *-1) + (_endPos.position.x);
+		totalDistance = (_startPos.localPosition.x *-1) + (_endPos.localPosition.x);
 	}
 	void Update()
     {

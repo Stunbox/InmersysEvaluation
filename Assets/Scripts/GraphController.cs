@@ -46,27 +46,27 @@ public class GraphController : MonoBehaviour
 			var pointE = Vector2.Lerp(pointB, pointC, _elapsedTime / _duration);
 
 			//Graph Sphere position 
-			sphere.position = Vector2.Lerp(pointD, pointE, _elapsedTime / _duration);
+			sphere.localPosition = Vector2.Lerp(pointD, pointE, _elapsedTime / _duration);
 
 			//For draw the function
 			if (drawLine) {
-				graphLine.SetPosition(index, sphere.position);
+				graphLine.SetPosition(index, sphere.localPosition);
 				index++;
 			}
 			//Calculating the scale of trail X
-			var value = points[0].localPosition.x * -1 + sphere.position.x;
+			var value = points[0].localPosition.x * -1 + sphere.localPosition.x;
 
 			//Calculating the position on X of trail X
-			var midPoint = (points[0].localPosition.x + sphere.position.x) / 2;
+			var midPoint = (points[0].localPosition.x + sphere.localPosition.x) / 2;
 			//Calculating the position on Y of trail Y
-			var midPoint2 = (points[0].localPosition.y + sphere.position.y) / 2;
+			var midPoint2 = (points[0].localPosition.y + sphere.localPosition.y) / 2;
 
 			//X trail
-			lineTrails[0].transform.position = new Vector3(midPoint, sphere.position.y, sphere.position.z);
+			lineTrails[0].transform.localPosition = new Vector3(midPoint, sphere.localPosition.y, sphere.localPosition.z);
 			lineTrails[0].transform.localScale = new Vector3(value, lineTrails[0].transform.localScale.y, lineTrails[0].transform.localScale.z);
 
 			//Y trail
-			lineTrails[1].transform.position = new Vector3(sphere.position.x, midPoint2, sphere.position.z);
+			lineTrails[1].transform.localPosition = new Vector3(sphere.localPosition.x, midPoint2, sphere.localPosition.z);
 			lineTrails[1].transform.localScale = new Vector3(lineTrails[1].transform.localScale.x, sphere.localPosition.y, lineTrails[1].transform.localScale.z);
 			
 		}
